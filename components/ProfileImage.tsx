@@ -14,6 +14,8 @@ interface ProfileImageProps {
   sizes?: string;
 }
 
+const profileSrcCandidates = ["/me.jpg", "/me.jpeg", "/me.png", "/me.webp"];
+
 export function ProfileImage({
   src,
   alt,
@@ -23,10 +25,27 @@ export function ProfileImage({
   priority = false,
   sizes,
 }: ProfileImageProps) {
-  const [hasError, setHasError] = useState(false);
+  const [srcIndex, setSrcIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Si src fourni est déjà dans les candidates, utilise son index, sinon utilise 0
+  const initialIndex = profileSrcCandidates.indexOf(src);
+  const [currentSrcIndex, setCurrentSrcIndex] = useState(initialIndex >= 0 ? initialIndex : 0);
+  const currentSrc = profileSrcCandidates[currentSrcIndex];
+  const hasExhaustedAllCandidates = currentSrcIndex >= profileSrcCandidates.length;
 
-  if (hasError) {
+  const handleError = () => {
+    if (currentSrcIndex < profileSrcCandidates.length - 1) {
+      // Essayer la prochaine extension
+      setCurrentSrcIndex(currentSrcIndex + 1);
+    } else {
+      // Toutes les extensions ont échoué, on garde le fallback JP
+      setCurrentSrcIndex(profileSrcCandidates.length); // Index hors limites pour déclencher le fallback
+    }
+    setIsLoading(false);
+  };
+
+  if (hasExhaustedAllCandidates || currentSrcIndex >= profileSrcCandidates.length) {
     // Placeholder avec initiales JP
     return (
       <div
@@ -44,7 +63,7 @@ export function ProfileImage({
 
   return (
     <Image
-      src={src}
+      src={currentSrc}
       alt={alt}
       width={width}
       height={height}
@@ -54,7 +73,7 @@ export function ProfileImage({
       blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
       sizes={sizes}
       quality={90}
-      onError={() => setHasError(true)}
+      onError={handleError}
       onLoad={() => setIsLoading(false)}
     />
   );

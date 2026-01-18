@@ -7,12 +7,26 @@
   --foreground: #1D1D1F;
 }
 
+.dark {
+  --bg: #06060a;
+  --text: #f3f4f6;
+  --muted: #a1a1aa;
+  --border: rgba(255, 255, 255, 0.12);
+  --card: rgba(255, 255, 255, 0.06);
+  --cardStrong: rgba(255, 255, 255, 0.10);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --ai-pink: #ec4899;
+  --ai-violet: #a855f7;
+  --ai-blue: #3b82f6;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
+  background-color: var(--bg);
+  color: var(--text);
   min-height: 100vh;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -30,10 +44,10 @@ body::before {
   height: 100%;
   z-index: -2;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.02) 0%, transparent 50%),
-    linear-gradient(180deg, #F5F5F7 0%, #F8F8FA 100%);
+    radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #06060a 0%, #0a0a0f 100%);
   background-attachment: fixed;
 }
 

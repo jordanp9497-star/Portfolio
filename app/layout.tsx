@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { AiBackground } from "@/components/AiBackground";
+import { NoiseOverlay } from "@/components/NoiseOverlay";
+import { Vignette } from "@/components/Vignette";
 import "./globals.css";
 
 const inter = Inter({
@@ -68,8 +71,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" className="dark">
       <body className={`${inter.variable} antialiased`}>
+        <AiBackground />
+        <NoiseOverlay />
+        <Vignette />
         <Navbar />
         {children}
         <Footer />

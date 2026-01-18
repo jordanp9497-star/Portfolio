@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -12,6 +13,10 @@ import { medicalia, site } from "@/lib/content";
 
 export default function MedicaliaPage() {
   const content = medicalia;
+  const [screenshot1Error, setScreenshot1Error] = useState(false);
+  const [screenshot2Error, setScreenshot2Error] = useState(false);
+  const [gallery1Error, setGallery1Error] = useState(false);
+  const [gallery2Error, setGallery2Error] = useState(false);
   return (
     <main className="min-h-screen pt-24 sm:pt-28">
       {/* Header Projet + CTA */}
@@ -150,6 +155,72 @@ export default function MedicaliaPage() {
         </Container>
       </section>
 
+      {/* Screenshots */}
+      <section className="py-16 sm:py-20 lg:py-28 bg-background">
+        <Container>
+          <FadeInView>
+            <SectionTitle
+              title="Screenshots"
+              subtitle="Aperçu de l'interface Medicalia"
+            />
+          </FadeInView>
+
+          <div className="max-w-6xl mx-auto">
+            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
+              <FadeInView delay={0.1}>
+                <Card className={screenshot1Error ? "p-6" : "p-0 overflow-hidden"}>
+                  <div className="relative aspect-[9/16] w-full">
+                    {screenshot1Error ? (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <p className="text-sm text-text-secondary">Screenshot indisponible</p>
+                      </div>
+                    ) : (
+                      <Image
+                        src="/medicalia/1.jpg"
+                        alt="Medicalia - Interface principale"
+                        fill
+                        className="object-cover"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        quality={90}
+                        onError={() => setScreenshot1Error(true)}
+                      />
+                    )}
+                  </div>
+                </Card>
+              </FadeInView>
+
+              <FadeInView delay={0.2}>
+                <Card className={screenshot2Error ? "p-6" : "p-0 overflow-hidden"}>
+                  <div className="relative aspect-[9/16] w-full">
+                    {screenshot2Error ? (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <p className="text-sm text-text-secondary">Screenshot indisponible</p>
+                      </div>
+                    ) : (
+                      <Image
+                        src="/medicalia/2.jpg"
+                        alt="Medicalia - Gestion des dossiers"
+                        fill
+                        className="object-cover"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        quality={90}
+                        onError={() => setScreenshot2Error(true)}
+                      />
+                    )}
+                  </div>
+                </Card>
+              </FadeInView>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* Galerie screenshots - Layout premium */}
       <section className="py-16 sm:py-20 lg:py-28 bg-background">
         <Container>
@@ -174,17 +245,26 @@ export default function MedicaliaPage() {
                           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10" />
                           {/* Screen */}
                           <div className="relative bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19.5]">
-                            <Image
-                              src={content.gallery.screenshots[0].src}
-                              alt={content.gallery.screenshots[0].alt}
-                              fill
-                              className="object-cover"
-                              loading="lazy"
-                              placeholder="blur"
-                              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
-                              sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
-                              quality={90}
-                            />
+                            {gallery1Error ? (
+                              <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                                <div className="text-center px-4">
+                                  <p className="text-sm text-text-secondary">Screenshot indisponible</p>
+                                </div>
+                              </div>
+                            ) : (
+                              <Image
+                                src={content.gallery.screenshots[0].src}
+                                alt={content.gallery.screenshots[0].alt}
+                                fill
+                                className="object-cover"
+                                loading="lazy"
+                                placeholder="blur"
+                                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
+                                sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
+                                quality={90}
+                                onError={() => setGallery1Error(true)}
+                              />
+                            )}
                           </div>
                           {/* Home Indicator */}
                           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/30 rounded-full" />
@@ -205,17 +285,26 @@ export default function MedicaliaPage() {
                 <FadeInView delay={0.2}>
                   <div className="space-y-4">
                     <div className="relative aspect-[9/16] rounded-card overflow-hidden border border-border shadow-card bg-gray-100">
-                      <Image
-                        src={content.gallery.screenshots[1].src}
-                        alt={content.gallery.screenshots[1].alt}
-                        fill
-                        className="object-cover"
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
-                        quality={90}
-                      />
+                      {gallery2Error ? (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Card className="m-4">
+                            <p className="text-sm text-text-secondary">Screenshot indisponible</p>
+                          </Card>
+                        </div>
+                      ) : (
+                        <Image
+                          src={content.gallery.screenshots[1].src}
+                          alt={content.gallery.screenshots[1].alt}
+                          fill
+                          className="object-cover"
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
+                          quality={90}
+                          onError={() => setGallery2Error(true)}
+                        />
+                      )}
                     </div>
                     {content.galleryCaptions && content.galleryCaptions[1] && (
                       <p className="text-sm text-text-secondary text-center sm:text-left italic">

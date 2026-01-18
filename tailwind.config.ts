@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 import { theme } from "./lib/theme";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,13 +11,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: theme.colors.background,
-        card: theme.colors.card,
-        border: theme.colors.border,
+        background: "var(--bg)",
+        card: "var(--card)",
+        border: "var(--border)",
         text: {
-          primary: theme.colors.text.primary,
-          secondary: theme.colors.text.secondary,
+          primary: "var(--text)",
+          secondary: "var(--muted)",
         },
+        "ai-pink": "var(--ai-pink)",
+        "ai-violet": "var(--ai-violet)",
+        "ai-blue": "var(--ai-blue)",
       },
       borderRadius: {
         card: theme.radii.card,

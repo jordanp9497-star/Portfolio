@@ -8,8 +8,8 @@ export const site = {
 
 export const home = {
   hero: {
-    headline: "Consultant en solutions d'applications et d'automatisations orientées résultat",
-    subtitle: "Compréhension métier approfondie grâce à mes expériences variées. J'identifie rapidement vos problématiques et je les solutionne avec des outils concrets qui transforment votre productivité.",
+    headline: "Vous voulez décupler vos résultats grâce à l'automatisation ? Vous êtes au bon endroit.",
+    subtitle: "Je ne livre pas \"du code\". Je livre une solution clé en main — pensée métier, intégrée à vos outils — qui augmente concrètement la productivité.",
     chips: ["Apps métier", "Automatisation", "n8n", "IA utile"],
     ctaPrimary: {
       text: "Discuter de votre besoin",

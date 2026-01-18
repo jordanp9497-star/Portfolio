@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
@@ -14,6 +15,18 @@ import { home, site } from "@/lib/content";
 
 export default function Home() {
   const content = home;
+  const [selectedShot, setSelectedShot] = useState<number>(0);
+  const [deviceFrameError, setDeviceFrameError] = useState(false);
+  const [thumbnailErrors, setThumbnailErrors] = useState<boolean[]>([false, false]);
+  const medicaliaShots = ["/medicalia/1.jpg", "/medicalia/2.jpg"];
+
+  const handleThumbnailError = (index: number) => {
+    setThumbnailErrors((prev) => {
+      const newErrors = [...prev];
+      newErrors[index] = true;
+      return newErrors;
+    });
+  };
   return (
     <main className="min-h-screen pt-24 sm:pt-28">
       {/* Hero Section */}
@@ -23,7 +36,7 @@ export default function Home() {
             {/* Photo ronde */}
             <FadeInView delay={0}>
               <div className="mb-8 sm:mb-10 lg:mb-12 flex justify-center">
-                <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-border shadow-card bg-gray-100">
+                <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] bg-gray-100">
                   <ProfileImage
                     src="/me.jpg"
                     alt={`${content.hero.headline}`}
@@ -38,14 +51,30 @@ export default function Home() {
 
             {/* H1 - Accroche */}
             <FadeInView delay={0.1}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-6 sm:mb-8 tracking-tight leading-tight">
-                {content.hero.headline}
-              </h1>
+              <div className="relative inline-block mx-auto">
+                {/* Label discret au-dessus du H1 */}
+                <div className="flex justify-center mb-4">
+                  <span className="inline-flex rounded-full px-3 py-1 text-xs text-white/70 border border-white/10 bg-white/5">
+                    Automatisation • Apps métier • IA
+                  </span>
+                </div>
+                {/* Spotlight derrière le H1 */}
+                <div
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, rgba(168, 85, 247, 0.12) 40%, transparent 70%)",
+                    filter: "blur(60px)",
+                  }}
+                />
+                <h1 className="relative text-[clamp(2.1rem,3.6vw,3.2rem)] font-semibold text-text-primary mb-6 sm:mb-8 tracking-tight leading-[1.05] max-w-[28ch] mx-auto">
+                  {content.hero.headline}
+                </h1>
+              </div>
             </FadeInView>
 
             {/* Sous-titre */}
             <FadeInView delay={0.2}>
-              <p className="text-lg sm:text-xl lg:text-2xl text-text-secondary mb-8 sm:mb-10 lg:mb-12 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-[clamp(1rem,1.05vw,1.08rem)] text-text-secondary mb-8 sm:mb-10 lg:mb-12 max-w-3xl mx-auto leading-relaxed">
                 {content.hero.subtitle}
               </p>
             </FadeInView>
@@ -75,6 +104,9 @@ export default function Home() {
                     {content.hero.ctaSubtext}
                   </p>
                 )}
+                <p className="text-sm text-white/60 leading-relaxed max-w-[60ch] mx-auto pt-2">
+                  Fort de plus de dix ans d'expérience (comptabilité, vente, restauration), j'identifie vite les frictions terrain et je transforme vos processus en workflows simples, mesurables et fiables.
+                </p>
               </div>
             </FadeInView>
 
@@ -268,22 +300,65 @@ export default function Home() {
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10" />
                         {/* Screen */}
                         <div className="relative bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19.5]">
-                          <Image
-                            src={content.projects.featured.screenshot || "/medicalia/1.jpg"}
-                            alt={content.projects.featured.screenshotAlt || "Screenshot Medicalia"}
-                            fill
-                            className="object-cover"
-                            loading="lazy"
-                            placeholder="blur"
-                            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
-                            sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
-                            quality={90}
-                          />
+                          {deviceFrameError ? (
+                            <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                              <div className="text-center px-4">
+                                <p className="text-sm text-text-secondary">Screenshot indisponible</p>
+                              </div>
+                            </div>
+                          ) : (
+                            <Image
+                              src={medicaliaShots[selectedShot]}
+                              alt={content.projects.featured.screenshotAlt || "Screenshot Medicalia"}
+                              fill
+                              className="object-cover"
+                              loading="lazy"
+                              placeholder="blur"
+                              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
+                              sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
+                              quality={90}
+                              onError={() => setDeviceFrameError(true)}
+                            />
+                          )}
                         </div>
                         {/* Home Indicator */}
                         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/30 rounded-full" />
                       </div>
                     </div>
+                  </div>
+
+                  {/* Thumbnails galerie */}
+                  <div className="flex justify-center gap-3 lg:justify-end">
+                    {medicaliaShots.map((shot, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setSelectedShot(index);
+                          setDeviceFrameError(false);
+                        }}
+                        className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border transition-all cursor-pointer hover:opacity-90 ${
+                          selectedShot === index
+                            ? "border-white/30 ring-2 ring-[color:var(--ai-blue)]/30"
+                            : "border-white/10"
+                        }`}
+                      >
+                        {thumbnailErrors[index] ? (
+                          <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                            <p className="text-[8px] text-text-secondary text-center px-1">N/A</p>
+                          </div>
+                        ) : (
+                          <Image
+                            src={shot}
+                            alt={`Medicalia screenshot ${index + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="96px"
+                            quality={75}
+                            onError={() => handleThumbnailError(index)}
+                          />
+                        )}
+                      </button>
+                    ))}
                   </div>
 
                   {/* Highlights App Store style */}

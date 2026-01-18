@@ -11,17 +11,17 @@ export function Chip({ children, variant = "default", className }: ChipProps) {
   return (
     <span
       className={cn(
-        // Style pill iOS
+        // Style pill glass sombre
         "inline-flex items-center justify-center",
         "px-4 py-1.5 text-sm font-medium rounded-full",
         "transition-all duration-200 ease-out",
         "border",
         {
-          // Default: fond léger avec border subtile
-          "bg-gray-50/80 backdrop-blur-sm border-gray-200/60 text-text-primary hover:bg-gray-100/80 hover:border-gray-300/60":
+          // Default: glass sombre avec border léger
+          "bg-[rgba(255,255,255,0.04)] backdrop-blur-sm border-[color:var(--border)] text-text-primary hover:bg-[rgba(255,255,255,0.08)] hover:border-[color:var(--border)]/60":
             variant === "default",
           // Outline: border avec fond transparent
-          "bg-white/50 backdrop-blur-sm border-border text-text-secondary hover:bg-gray-50/80 hover:border-opacity-40 hover:text-text-primary":
+          "bg-transparent border-[color:var(--border)] text-text-secondary hover:bg-[rgba(255,255,255,0.04)] hover:text-text-primary":
             variant === "outline",
         },
         className
