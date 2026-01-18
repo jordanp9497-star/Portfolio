@@ -87,6 +87,21 @@ export default function Home() {
     <main className="min-h-screen pt-24 sm:pt-28">
       {/* Hero Section */}
       <section className="relative py-12 sm:py-16 lg:py-24 overflow-hidden">
+        {/* Background image layer */}
+        <div
+          className="absolute inset-0 z-0 opacity-10 md:opacity-[0.18] pointer-events-none"
+          style={{
+            backgroundImage: "url('/automation-resultats.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            filter: "blur(1px) saturate(1.1)",
+          }}
+        >
+          {/* Overlay sombre pour garder le texte lisible */}
+          <div className="absolute inset-0 bg-black/35" />
+        </div>
+        
         <HeroAutomationBg />
         <Container>
           <div className="max-w-4xl mx-auto text-center relative z-10">

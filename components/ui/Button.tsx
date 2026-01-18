@@ -46,7 +46,7 @@ export function Button({
     {
       // Secondary variant et fallback - glass sombre (bg-white/6 + border)
       "bg-white/6 border-white/10":
-        variant === "secondary" || (variant !== "primary" && variant !== "cta"),
+        variant !== "primary" && variant !== "cta",
       // CTA variant - gradient IA (rose->violet->bleu) + texte blanc + glow léger
       "bg-gradient-to-r from-[color:var(--ai-pink)] via-[color:var(--ai-violet)] to-[color:var(--ai-blue)] border-transparent":
         variant === "cta",
