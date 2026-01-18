@@ -11,6 +11,7 @@ import { FadeInView } from "@/components/ui/FadeInView";
 import { Accordion, AccordionItem } from "@/components/ui/Accordion";
 import { ProofBar } from "@/components/ProofBar";
 import { ProfileImage } from "@/components/ProfileImage";
+import { ChatWidget } from "@/components/ChatWidget";
 import { home, site } from "@/lib/content";
 
 export default function Home() {
@@ -652,6 +653,9 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {/* Chat Widget */}
+      <ChatWidget />
     </main>
   );
 }
