@@ -113,23 +113,42 @@ export const home = {
       featuresLabel: "Ce que ça fait :",
       ctaText: "Me contacter",
     },
-    featured: {
-      title: "Projet phare : Medicalia",
-      subtitle: "Une solution digitale complète pour moderniser la gestion médicale",
-      teaser: [
-        "Medicalia est une application qui transforme la gestion quotidienne d'un cabinet médical. Conçue pour répondre aux contraintes réelles des professionnels de santé, elle centralise rendez-vous, dossiers patients et suivi médical.",
-        "Le résultat : une réduction significative du temps administratif et une amélioration de l'expérience patient, avec une interface pensée pour les besoins du terrain.",
-      ],
-      highlights: [
-        { icon: "📱", label: "Scan", description: "Scan rapide de documents médicaux" },
-        { icon: "📋", label: "Résumé", description: "Synthèse automatique des dossiers" },
-        { icon: "🔲", label: "QR", description: "Codes QR pour accès rapide" },
-      ],
-      screenshot: "/medicalia/1.jpg",
-      screenshotAlt: "Screenshot Medicalia - Interface application",
-      ctaText: "Voir Medicalia",
-      ctaHref: "/projects/medicalia",
-    },
+    featured: [
+      {
+        title: "Medicalia",
+        tagline: "Application mobile et web pour cabinet médical",
+        pitch: "Medicalia transforme la gestion quotidienne d'un cabinet médical. Centralise rendez-vous, dossiers patients et suivi médical pour réduire significativement le temps administratif.",
+        bullets: [
+          "Scan rapide de documents médicaux",
+          "Synthèse automatique des dossiers",
+          "Codes QR pour accès rapide",
+        ],
+        stack: ["React", "Next.js", "TypeScript", "PostgreSQL"],
+        screenshots: ["/medicalia/1.jpg", "/medicalia/2.jpg"],
+        status: "Projet phare",
+        ctaText: "Voir le projet",
+        ctaHref: "/projects/medicalia",
+        ctaSecondaryText: "Me contacter",
+        ctaSecondaryHref: `mailto:${site.email}?subject=Demande%20d'information%20-%20Medicalia`,
+      },
+      {
+        title: "StockWolf",
+        tagline: "Agent IA — alertes news IA en bourse",
+        pitch: "StockWolf surveille le secteur IA coté bourse et vous alerte dès qu'une news importante tombe — triée, dédupliquée et résumée.",
+        bullets: [
+          "Workflows n8n + scoring des news",
+          "DB Supabase + univers secteurs (bientôt)",
+          "Front Next.js + paiement Stripe",
+        ],
+        stack: ["n8n", "Supabase", "Next.js", "Stripe"],
+        screenshots: ["/stockwolf/1.jpg", "/stockwolf/2.jpg"],
+        status: "En cours",
+        ctaText: "Voir le projet",
+        ctaHref: "/projects/stockwolf",
+        ctaSecondaryText: "Me contacter",
+        ctaSecondaryHref: `mailto:${site.email}?subject=Demande%20d'information%20-%20StockWolf`,
+      },
+    ],
     inProgress: [
       {
         title: "Agent alertes bourse",
@@ -347,5 +366,88 @@ export const medicalia = {
   galleryCaptions: [
     "Medicalia - Interface principale avec pilulier digital",
     "Medicalia - Gestion des ordonnances et dossiers médicaux",
+  ],
+};
+
+export const stockwolf = {
+  pitch: {
+    title: "StockWolf",
+    subtitle: "Agent IA — alertes news IA en bourse",
+    paragraphs: [
+      "StockWolf surveille le secteur IA coté bourse et vous alerte dès qu'une news importante tombe — triée, dédupliquée et résumée.",
+      "Automatisation d'un flow via n8n : sondage de plusieurs sources/API, déduplication intelligente, scoring automatique, et envoi d'alertes ciblées. D'autres secteurs arrivent.",
+    ],
+  },
+
+  header: {
+    backLinkLabel: "Retour aux projets",
+    backLinkHref: "/#project",
+    title: "StockWolf",
+    pitch: "Agent IA — alertes news IA en bourse. Digest & alertes automatisées avec filtrage IA et déduplication.",
+    ctaText: "Discuter du projet",
+  },
+
+  problemSolution: {
+    title: "Pourquoi StockWolf",
+    subtitle: "Automatisation intelligente pour rester informé",
+    problem: {
+      title: "Le problème",
+      text: "Suivre l'actualité boursière du secteur IA est chronophage : nombreuses sources à consulter, informations redondantes, risque de manquer les news importantes qui impactent vos investissements.",
+    },
+    solution: {
+      title: "La solution",
+      paragraphs: [
+        "StockWolf automatise la surveillance via n8n : sondage de plusieurs sources/API, déduplication intelligente, scoring automatique, et envoi d'alertes ciblées. Vous recevez uniquement les informations pertinentes, triées et résumées automatiquement.",
+        "Le résultat : un gain de temps considérable pour rester informé du secteur IA en bourse, avec la possibilité d'étendre à d'autres secteurs prochainement.",
+      ],
+    },
+  },
+
+  howItWorks: {
+    title: "Comment ça marche",
+    subtitle: "Trois étapes pour une surveillance automatisée",
+    steps: [
+      {
+        number: 1,
+        title: "Collecte",
+        description: "Sondage automatique de plusieurs sources/API pour récupérer les news du secteur IA en bourse.",
+      },
+      {
+        number: 2,
+        title: "Traitement",
+        description: "Déduplication intelligente et scoring automatique pour identifier les news les plus pertinentes.",
+      },
+      {
+        number: 3,
+        title: "Alertes",
+        description: "Envoi automatique de digest et d'alertes ciblées avec résumé des informations importantes.",
+      },
+    ],
+  },
+
+  stack: {
+    title: "Stack technique",
+    subtitle: "Les technologies utilisées pour construire StockWolf",
+    technologies: ["n8n", "Supabase", "Next.js", "Stripe"],
+  },
+
+  gallery: {
+    title: "Screenshots",
+    subtitle: "Aperçu de l'interface StockWolf",
+    screenshots: [
+      { src: "/stockwolf/1.jpg", alt: "StockWolf - Interface principale" },
+      { src: "/stockwolf/2.jpg", alt: "StockWolf - Alertes et digest" },
+    ],
+  },
+
+  cta: {
+    title: "Un projet similaire en tête ?",
+    description: "Discutons de votre projet et créons ensemble une solution qui transforme votre activité.",
+    buttonText: "Discuter du projet",
+  },
+
+  galleryCaptions: [
+    "StockWolf - Interface principale avec surveillance du secteur IA",
+    "StockWolf - Alertes et digest automatisés",
   ],
 };

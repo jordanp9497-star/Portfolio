@@ -15,13 +15,28 @@ import { home, site } from "@/lib/content";
 
 export default function Home() {
   const content = home;
-  const [selectedShot, setSelectedShot] = useState<number>(0);
-  const [deviceFrameError, setDeviceFrameError] = useState(false);
-  const [thumbnailErrors, setThumbnailErrors] = useState<boolean[]>([false, false]);
+  // States pour Medicalia
+  const [medicaliaSelectedShot, setMedicaliaSelectedShot] = useState<number>(0);
+  const [medicaliaDeviceFrameError, setMedicaliaDeviceFrameError] = useState(false);
+  const [medicaliaThumbnailErrors, setMedicaliaThumbnailErrors] = useState<boolean[]>([false, false]);
   const medicaliaShots = ["/medicalia/1.jpg", "/medicalia/2.jpg"];
 
-  const handleThumbnailError = (index: number) => {
-    setThumbnailErrors((prev) => {
+  // States pour StockWolf
+  const [stockwolfSelectedShot, setStockwolfSelectedShot] = useState<number>(0);
+  const [stockwolfDeviceFrameError, setStockwolfDeviceFrameError] = useState(false);
+  const [stockwolfThumbnailErrors, setStockwolfThumbnailErrors] = useState<boolean[]>([false, false]);
+  const stockwolfShots = ["/stockwolf/1.jpg", "/stockwolf/2.jpg"];
+
+  const handleMedicaliaThumbnailError = (index: number) => {
+    setMedicaliaThumbnailErrors((prev) => {
+      const newErrors = [...prev];
+      newErrors[index] = true;
+      return newErrors;
+    });
+  };
+
+  const handleStockwolfThumbnailError = (index: number) => {
+    setStockwolfThumbnailErrors((prev) => {
       const newErrors = [...prev];
       newErrors[index] = true;
       return newErrors;
@@ -255,133 +270,191 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Section Projet phare : Medicalia */}
+      {/* Section Projets phares : Bento Grid */}
       <section id="project" className="py-16 sm:py-20 lg:py-28 bg-background">
         <Container>
           <FadeInView>
             <SectionTitle
-              title={content.projects.featured.title}
-              subtitle={content.projects.featured.subtitle}
+              title="Projets phares"
+              subtitle="Des solutions concrètes pour transformer votre activité"
             />
           </FadeInView>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
-              {/* Contenu texte */}
-              <FadeInView delay={0.1}>
-                <div className="space-y-6 sm:space-y-8">
-                  {/* Teaser */}
-                  <div className="space-y-4">
-                    {content.projects.featured.teaser.map((paragraph, index) => (
-                      <p key={index} className="text-base sm:text-lg text-text-secondary leading-relaxed">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
+              {content.projects.featured && Array.isArray(content.projects.featured) && content.projects.featured.map((project, projectIndex) => {
+                const isMedicalia = project.title === "Medicalia";
+                const selectedShot = isMedicalia ? medicaliaSelectedShot : stockwolfSelectedShot;
+                const deviceFrameError = isMedicalia ? medicaliaDeviceFrameError : stockwolfDeviceFrameError;
+                const thumbnailErrors = isMedicalia ? medicaliaThumbnailErrors : stockwolfThumbnailErrors;
+                const shots = isMedicalia ? medicaliaShots : stockwolfShots;
+                const setSelectedShot = isMedicalia ? setMedicaliaSelectedShot : setStockwolfSelectedShot;
+                const setDeviceFrameError = isMedicalia ? setMedicaliaDeviceFrameError : setStockwolfDeviceFrameError;
+                const handleThumbnailError = isMedicalia ? handleMedicaliaThumbnailError : handleStockwolfThumbnailError;
 
-                  {/* Bouton CTA - App Store style */}
-                  <div>
-                    <Button variant="primary" size="lg" href={content.projects.featured.ctaHref}>
-                      {content.projects.featured.ctaText}
-                    </Button>
-                  </div>
-                </div>
-              </FadeInView>
-
-              {/* Visuel Device Frame iPhone + Highlights */}
-              <FadeInView delay={0.2} direction="right">
-                <div className="space-y-8">
-                  {/* Device Frame iPhone avec screenshot */}
-                  <div className="flex justify-center lg:justify-end">
-                    <div className="relative w-64 sm:w-72 lg:w-80">
-                      {/* iPhone Frame */}
-                      <div className="relative bg-black rounded-[3rem] p-2 shadow-2xl">
-                        {/* Notch */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10" />
-                        {/* Screen */}
-                        <div className="relative bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19.5]">
-                          {deviceFrameError ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-                              <div className="text-center px-4">
-                                <p className="text-sm text-text-secondary">Screenshot indisponible</p>
-                              </div>
-                            </div>
-                          ) : (
-                            <Image
-                              src={medicaliaShots[selectedShot]}
-                              alt={content.projects.featured.screenshotAlt || "Screenshot Medicalia"}
-                              fill
-                              className="object-cover"
-                              loading="lazy"
-                              placeholder="blur"
-                              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
-                              sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
-                              quality={90}
-                              onError={() => setDeviceFrameError(true)}
-                            />
-                          )}
-                        </div>
-                        {/* Home Indicator */}
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/30 rounded-full" />
+                return (
+                  <FadeInView key={project.title} delay={0.1 + projectIndex * 0.1}>
+                    <Card className="h-full flex flex-col p-6 sm:p-8">
+                      {/* Badge Status */}
+                      <div className="mb-4">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                          {project.status}
+                        </span>
                       </div>
-                    </div>
-                  </div>
 
-                  {/* Thumbnails galerie */}
-                  <div className="flex justify-center gap-3 lg:justify-end">
-                    {medicaliaShots.map((shot, index) => (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          setSelectedShot(index);
-                          setDeviceFrameError(false);
-                        }}
-                        className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border transition-all cursor-pointer hover:opacity-90 ${
-                          selectedShot === index
-                            ? "border-white/30 ring-2 ring-[color:var(--ai-blue)]/30"
-                            : "border-white/10"
-                        }`}
-                      >
-                        {thumbnailErrors[index] ? (
-                          <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-                            <p className="text-[8px] text-text-secondary text-center px-1">N/A</p>
-                          </div>
-                        ) : (
-                          <Image
-                            src={shot}
-                            alt={`Medicalia screenshot ${index + 1}`}
-                            fill
-                            className="object-cover"
-                            sizes="96px"
-                            quality={75}
-                            onError={() => handleThumbnailError(index)}
-                          />
-                        )}
-                      </button>
-                    ))}
-                  </div>
+                      {/* Titre + Tagline */}
+                      <h3 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-text-secondary mb-4">
+                        {project.tagline}
+                      </p>
 
-                  {/* Highlights App Store style */}
-                  {content.projects.featured.highlights && (
-                    <div className="grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
-                      {content.projects.featured.highlights.map((highlight, index) => (
-                        <div
-                          key={index}
-                          className="text-center space-y-2"
-                        >
-                          <div className="text-3xl mb-1">{highlight.icon}</div>
-                          <div className="text-sm font-semibold text-text-primary">
-                            {highlight.label}
-                          </div>
-                          <div className="text-xs text-text-secondary leading-tight">
-                            {highlight.description}
+                      {/* Pitch */}
+                      <p className="text-base text-text-secondary leading-relaxed mb-6 flex-grow">
+                        {project.pitch}
+                      </p>
+
+                      {/* Bullets */}
+                      <div className="mb-6 space-y-2">
+                        <ul className="space-y-2">
+                          {project.bullets.map((bullet, bulletIndex) => (
+                            <li key={bulletIndex} className="text-sm text-text-secondary flex items-start">
+                              <span className="mr-2 text-text-primary">•</span>
+                              <span>{bullet}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* DeviceFrame / Aperçu visuel */}
+                      <div className="mb-6 space-y-4">
+                        {/* Device Frame iPhone pour Medicalia, Dashboard Frame pour StockWolf */}
+                        <div className="flex justify-center">
+                          <div className={`relative ${isMedicalia ? "w-48 sm:w-56" : "w-full max-w-md"}`}>
+                            {isMedicalia ? (
+                              /* iPhone Frame */
+                              <div className="relative bg-black rounded-[3rem] p-2 shadow-2xl">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10" />
+                                <div className="relative bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19.5]">
+                                  {deviceFrameError ? (
+                                    <Card className="absolute inset-0 flex items-center justify-center m-2">
+                                      <p className="text-xs text-text-secondary text-center px-2">Screenshot indisponible</p>
+                                    </Card>
+                                  ) : (
+                                    <Image
+                                      src={shots[selectedShot]}
+                                      alt={`${project.title} screenshot ${selectedShot + 1}`}
+                                      fill
+                                      className="object-cover"
+                                      loading="lazy"
+                                      placeholder="blur"
+                                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
+                                      sizes="(max-width: 640px) 192px, 224px"
+                                      quality={90}
+                                      onError={() => setDeviceFrameError(true)}
+                                    />
+                                  )}
+                                </div>
+                                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/30 rounded-full" />
+                              </div>
+                            ) : (
+                              /* Dashboard Frame pour StockWolf */
+                              <div className="relative rounded-lg overflow-hidden border border-border shadow-card bg-[rgba(255,255,255,0.03)] aspect-[16/10]">
+                                {deviceFrameError ? (
+                                  <Card className="absolute inset-0 flex items-center justify-center m-4">
+                                    <p className="text-sm text-text-secondary text-center px-4">Screenshot indisponible</p>
+                                  </Card>
+                                ) : (
+                                  <Image
+                                    src={shots[selectedShot]}
+                                    alt={`${project.title} screenshot ${selectedShot + 1}`}
+                                    fill
+                                    className="object-cover"
+                                    loading="lazy"
+                                    placeholder="blur"
+                                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY3Ii8+PC9zdmc+"
+                                    sizes="(max-width: 640px) 100vw, 50vw"
+                                    quality={90}
+                                    onError={() => setDeviceFrameError(true)}
+                                  />
+                                )}
+                              </div>
+                            )}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </FadeInView>
+
+                        {/* Thumbnails */}
+                        {shots.length > 1 && (
+                          <div className="flex justify-center gap-3">
+                            {shots.map((shot, index) => (
+                              <button
+                                key={index}
+                                onClick={() => {
+                                  setSelectedShot(index);
+                                  setDeviceFrameError(false);
+                                }}
+                                className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border transition-all cursor-pointer hover:opacity-90 ${
+                                  selectedShot === index
+                                    ? "border-white/30 ring-2 ring-[color:var(--ai-blue)]/30"
+                                    : "border-white/10"
+                                }`}
+                              >
+                                {thumbnailErrors[index] ? (
+                                  <div className="absolute inset-0 flex items-center justify-center bg-[rgba(255,255,255,0.03)]">
+                                    <p className="text-[8px] text-text-secondary text-center px-1">N/A</p>
+                                  </div>
+                                ) : (
+                                  <Image
+                                    src={shot}
+                                    alt={`${project.title} screenshot ${index + 1}`}
+                                    fill
+                                    className="object-cover"
+                                    sizes="64px"
+                                    quality={75}
+                                    onError={() => handleThumbnailError(index)}
+                                  />
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Chips Stack */}
+                      {project.stack && project.stack.length > 0 && (
+                        <div className="mb-6">
+                          <div className="flex flex-wrap gap-2">
+                            {project.stack.map((tech) => (
+                              <Chip key={tech}>{tech}</Chip>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Boutons CTA */}
+                      <div className="mt-auto pt-4 border-t border-border flex flex-col sm:flex-row gap-3">
+                        <Button
+                          variant="primary"
+                          size="md"
+                          href={project.ctaHref}
+                          className="w-full sm:w-auto"
+                        >
+                          {project.ctaText}
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="md"
+                          href={project.ctaSecondaryHref}
+                          className="w-full sm:w-auto"
+                        >
+                          {project.ctaSecondaryText}
+                        </Button>
+                      </div>
+                    </Card>
+                  </FadeInView>
+                );
+              })}
             </div>
           </div>
         </Container>
