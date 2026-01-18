@@ -141,7 +141,7 @@ export const home = {
           "Front Next.js + paiement Stripe",
         ],
         stack: ["n8n", "Supabase", "Next.js", "Stripe"],
-        screenshots: ["/stockwolf/1.jpg", "/stockwolf/2.jpg"],
+        screenshots: ["/stockwolf/1.png", "/stockwolf/2.png"],
         status: "En cours",
         ctaText: "Voir le projet",
         ctaHref: "/projects/stockwolf",
@@ -435,8 +435,8 @@ export const stockwolf = {
     title: "Screenshots",
     subtitle: "Aperçu de l'interface StockWolf",
     screenshots: [
-      { src: "/stockwolf/1.jpg", alt: "StockWolf - Interface principale" },
-      { src: "/stockwolf/2.jpg", alt: "StockWolf - Alertes et digest" },
+      { src: "/stockwolf/1.png", alt: "StockWolf - Interface principale" },
+      { src: "/stockwolf/2.png", alt: "StockWolf - Alertes et digest" },
     ],
   },
 

@@ -10,9 +10,48 @@ import { Card } from "@/components/ui/Card";
 import { FadeInView } from "@/components/ui/FadeInView";
 import { Accordion, AccordionItem } from "@/components/ui/Accordion";
 import { ProofBar } from "@/components/ProofBar";
-import { ProfileImage } from "@/components/ProfileImage";
 import { ChatWidget } from "@/components/ChatWidget";
 import { home, site } from "@/lib/content";
+
+// Composant wrapper pour l'image de profil avec fallback robuste
+function ProfileImageWrapper() {
+  const candidates = ["/me.jpg", "/me.jpeg", "/me.png", "/me.webp"];
+  const [srcIndex, setSrcIndex] = useState(0);
+  const currentSrc = candidates[srcIndex];
+  const hasExhaustedAllCandidates = srcIndex >= candidates.length;
+
+  const handleError = () => {
+    if (srcIndex < candidates.length - 1) {
+      // Essayer la prochaine extension
+      setSrcIndex(srcIndex + 1);
+    } else {
+      // Toutes les extensions ont échoué, afficher fallback
+      setSrcIndex(candidates.length);
+    }
+  };
+
+  if (hasExhaustedAllCandidates) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-text-primary/10 to-text-primary/5">
+        <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary">
+          JP
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      src={currentSrc}
+      alt="Jordan Pierron"
+      fill
+      className="object-cover"
+      sizes="(max-width: 768px) 220px, 300px"
+      priority
+      onError={handleError}
+    />
+  );
+}
 
 export default function Home() {
   const content = home;
@@ -26,7 +65,7 @@ export default function Home() {
   const [stockwolfSelectedShot, setStockwolfSelectedShot] = useState<number>(0);
   const [stockwolfDeviceFrameError, setStockwolfDeviceFrameError] = useState(false);
   const [stockwolfThumbnailErrors, setStockwolfThumbnailErrors] = useState<boolean[]>([false, false]);
-  const stockwolfShots = ["/stockwolf/1.jpg", "/stockwolf/2.jpg"];
+  const stockwolfShots = ["/stockwolf/1.png", "/stockwolf/2.png"];
 
   const handleMedicaliaThumbnailError = (index: number) => {
     setMedicaliaThumbnailErrors((prev) => {
@@ -52,15 +91,16 @@ export default function Home() {
             {/* Photo ronde */}
             <FadeInView delay={0}>
               <div className="mb-8 sm:mb-10 lg:mb-12 flex justify-center">
-                <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] bg-gray-100">
-                  <ProfileImage
-                    src="/me.jpg"
-                    alt={`${content.hero.headline}`}
-                    width={160}
-                    height={160}
-                    priority
-                    sizes="(max-width: 640px) 96px, (max-width: 1024px) 128px, 160px"
+                <div className="relative aspect-square w-[220px] sm:w-[260px] lg:w-[300px] rounded-full overflow-hidden border border-white/10 bg-white/5 shadow-[0_20px_60px_rgba(0,0,0,.45)]">
+                  {/* Glow IA derrière */}
+                  <div
+                    className="absolute inset-[-30%] blur-[60px] opacity-30 pointer-events-none"
+                    style={{
+                      background: `radial-gradient(circle, var(--ai-pink), var(--ai-violet), var(--ai-blue))`,
+                    }}
                   />
+                  {/* Image ou fallback */}
+                  <ProfileImageWrapper />
                 </div>
               </div>
             </FadeInView>
@@ -436,7 +476,7 @@ export default function Home() {
                       {/* Boutons CTA */}
                       <div className="mt-auto pt-4 border-t border-border flex flex-col sm:flex-row gap-3">
                         <Button
-                          variant="primary"
+                          variant="cta"
                           size="md"
                           href={project.ctaHref}
                           className="w-full sm:w-auto"
