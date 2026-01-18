@@ -44,16 +44,13 @@ export function Button({
     "transform-gpu",
     "active:scale-[0.98]",
     {
-      // Secondary variant - glass sombre (bg-white/6 + border)
+      // Secondary variant et fallback - glass sombre (bg-white/6 + border)
       "bg-white/6 border-white/10":
-        variant === "secondary",
+        variant === "secondary" || (variant !== "primary" && variant !== "cta"),
       // CTA variant - gradient IA (rose->violet->bleu) + texte blanc + glow léger
       "bg-gradient-to-r from-[color:var(--ai-pink)] via-[color:var(--ai-violet)] to-[color:var(--ai-blue)] border-transparent":
         variant === "cta",
       // Primary variant - utilise les styles de base (bg-white/5 déjà défini)
-      // Fallback pour variant inconnu : utilise secondary
-      "bg-white/6 border-white/10":
-        variant !== "primary" && variant !== "cta",
       // Sizes
       "px-6 py-3 text-base": size === "md",
       "px-8 py-4 text-lg": size === "lg",
