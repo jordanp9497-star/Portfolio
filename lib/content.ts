@@ -8,7 +8,7 @@ export const site = {
 
 export const home = {
   hero: {
-    headline: "Vous voulez décupler vos résultats grâce à l'automatisation ? Vous êtes au bon endroit.",
+    headline: "Décuplez vos résultats grâce à l'automatisation.",
     subtitle: "Je ne livre pas \"du code\". Je livre une solution clé en main — pensée métier, intégrée à vos outils — qui augmente concrètement la productivité.",
     chips: ["Apps métier", "Automatisation", "n8n", "IA utile"],
     ctaPrimary: {
