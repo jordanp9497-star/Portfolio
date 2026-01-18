@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { AiBackground } from "@/components/AiBackground";
+import GearsBackground from "@/components/GearsBackground";
 import { NoiseOverlay } from "@/components/NoiseOverlay";
 import { Vignette } from "@/components/Vignette";
 import "./globals.css";
@@ -74,6 +75,7 @@ export default function RootLayout({
     <html lang="fr" className="dark">
       <body className={`${inter.variable} antialiased`}>
         <AiBackground />
+        <GearsBackground />
         <NoiseOverlay />
         <Vignette />
         <Navbar />

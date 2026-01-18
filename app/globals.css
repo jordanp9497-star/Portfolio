@@ -91,3 +91,91 @@ body::after {
     transform: translateY(-1px);
   }
 }
+
+/* Animations pour GearsBackground */
+@keyframes rotateGearLarge {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateGearMedium {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes rotateGearSmall {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gear-rotate-large {
+  animation: rotateGearLarge 40s linear infinite;
+  transform-origin: 0 0;
+}
+
+.gear-rotate-medium {
+  animation: rotateGearMedium 28s linear infinite;
+  transform-origin: 0 0;
+}
+
+.gear-rotate-small {
+  animation: rotateGearSmall 20s linear infinite;
+  transform-origin: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gear-rotate-large,
+  .gear-rotate-medium,
+  .gear-rotate-small {
+    animation: none !important;
+  }
+}
+
+/* Keyframes pour classes utilitaires gear */
+@keyframes gear-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gear-rotate-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Classes utilitaires pour engrenages */
+.gear {
+  transform-origin: center;
+  animation: gear-rotate 40s linear infinite;
+}
+
+.gear-rev {
+  transform-origin: center;
+  animation: gear-rotate-rev 28s linear infinite;
+}
+
+.gear-fast {
+  transform-origin: center;
+  animation: gear-rotate 20s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gear,
+  .gear-rev,
+  .gear-fast {
+    animation: none !important;
+  }
+}
