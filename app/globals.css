@@ -229,3 +229,77 @@ body::after {
     animation: none !important;
   }
 }
+
+/* Animations pour RobotChatButton */
+@keyframes robotPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  60% {
+    transform: scale(1.05) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes robotOscillate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes robotEyeBlink {
+  0%, 90%, 100% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes bubbleFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.robot-container {
+  animation: robotPopIn 0.6s ease-out;
+}
+
+.robot-svg {
+  animation: robotOscillate 3s ease-in-out infinite;
+}
+
+.robot-eye-left,
+.robot-eye-right {
+  animation: robotEyeBlink 4s ease-in-out infinite;
+}
+
+.robot-bubble {
+  animation: bubbleFadeOut 0.5s ease-out 6.5s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot-container,
+  .robot-svg,
+  .robot-eye-left,
+  .robot-eye-right,
+  .robot-bubble {
+    animation: none !important;
+  }
+}

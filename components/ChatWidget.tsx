@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { RobotChatButton } from "@/components/RobotChatButton";
 import { cn } from "@/lib/utils";
 
 interface Message {
@@ -98,35 +99,20 @@ export function ChatWidget() {
     }
   };
 
+  useEffect(() => {
+    const handleOpenChat = () => {
+      setIsOpen(true);
+    };
+    
+    window.addEventListener("openChat", handleOpenChat);
+    return () => window.removeEventListener("openChat", handleOpenChat);
+  }, []);
+
   if (!isOpen) {
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className={cn(
-          "fixed bottom-4 right-4 z-50",
-          "w-14 h-14 rounded-full",
-          "bg-white/10 backdrop-blur-md border border-white/15",
-          "shadow-lg hover:shadow-xl",
-          "hover:bg-white/15 transition-all duration-200",
-          "flex items-center justify-center",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
-        )}
-        aria-label="Ouvrir le chat"
-      >
-        <svg
-          className="w-6 h-6 text-white"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          />
-        </svg>
-      </button>
+      <div className="fixed bottom-4 right-4 z-50">
+        <RobotChatButton onOpenChat={() => setIsOpen(true)} />
+      </div>
     );
   }
 
