@@ -11,6 +11,7 @@ import { FadeInView } from "@/components/ui/FadeInView";
 import { Accordion, AccordionItem } from "@/components/ui/Accordion";
 import { ProofBar } from "@/components/ProofBar";
 import { ChatWidget } from "@/components/ChatWidget";
+import HeroAutomationBg from "@/components/HeroAutomationBg";
 import { home, site } from "@/lib/content";
 
 // Composant wrapper pour l'image de profil avec fallback robuste
@@ -85,9 +86,10 @@ export default function Home() {
   return (
     <main className="min-h-screen pt-24 sm:pt-28">
       {/* Hero Section */}
-      <section className="py-12 sm:py-16 lg:py-24">
+      <section className="relative py-12 sm:py-16 lg:py-24 overflow-hidden">
+        <HeroAutomationBg />
         <Container>
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center relative z-10">
             {/* Photo ronde */}
             <FadeInView delay={0}>
               <div className="mb-8 sm:mb-10 lg:mb-12 flex justify-center">
@@ -130,8 +132,12 @@ export default function Home() {
 
             {/* Sous-titre */}
             <FadeInView delay={0.2}>
-              <p className="text-[clamp(1rem,1.05vw,1.08rem)] text-text-secondary mb-8 sm:mb-10 lg:mb-12 max-w-3xl mx-auto leading-relaxed">
-                {content.hero.subtitle}
+              <p className="mt-5 max-w-2xl text-[13px] leading-relaxed text-white/65 md:text-sm mx-auto mb-8 sm:mb-10 lg:mb-12">
+                <span className="text-white/80 font-medium">
+                  Que vous vouliez fluidifier vos workflows, automatiser vos tâches ou transformer une problématique métier en application, vous êtes au bon endroit.
+                </span>
+                <br />
+                En 2026, perdre du temps sur du répétitif n'est plus acceptable. Grâce à une compréhension solide du terrain et de l'IA, je structure vos process et décuple votre productivité.
               </p>
             </FadeInView>
 
